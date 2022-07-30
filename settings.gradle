@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        jcenter()
+        maven { url 'https://dl.google.com/dl' }
+        maven { url 'https://jitpack.io' }
+//        maven { url 'http://maven.andob.info/repository/open_source'
+//            allowInsecureProtocol = true
+//        }
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        gradlePluginPortal()
+        jcenter()
+        maven { url 'https://dl.google.com/dl' }
+        maven { url 'https://jitpack.io' }
+//        maven { url 'http://maven.andob.info/repository/open_source'
+//            allowInsecureProtocol = true
+//        }
+    }
+}
+rootProject.name = "SattariCoordinator"
+include ':app'
