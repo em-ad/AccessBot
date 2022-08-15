@@ -15,6 +15,7 @@ public class AccessChooserActivity extends AppCompatActivity {
     private TextView tvNormalAccess;
     private TextView tvTimedAccess;
     private TextView tvMessage;
+    private TextView tvHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +42,17 @@ public class AccessChooserActivity extends AppCompatActivity {
 
             }
         });
+        tvHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AccessChooserActivity.this, MyRequestsActivity.class));
+            }
+        });
     }
 
     private void findViews() {
         tvNormalAccess = findViewById(R.id.tvNormalAccess);
+        tvHistory = findViewById(R.id.tvHistory);
         tvTimedAccess = findViewById(R.id.tvTimedAccess);
         tvMessage = findViewById(R.id.tvMessage);
     }

@@ -4,6 +4,7 @@ import com.emad.sattaricoordinator.model.ChangeStatusModel;
 import com.emad.sattaricoordinator.model.CreateRequestModel;
 import com.emad.sattaricoordinator.model.LoginResponseModel;
 import com.emad.sattaricoordinator.model.LoginRequestModel;
+import com.emad.sattaricoordinator.model.RequestItem;
 import com.emad.sattaricoordinator.model.RequestResponseModel;
 
 import java.util.List;
@@ -47,6 +48,25 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<List<RequestResponseModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void getMyRequests(String token, ApiCallback apiCallback) {
+        RetrofitClient.getInstance().getKheyratiApi()
+                .getMyRequests("Bearer " + token)
+                .enqueue(new Callback<List<RequestItem>>() {
+                    @Override
+                    public void onResponse(Call<List<RequestItem>> call, Response<List<RequestItem>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<RequestItem>> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });

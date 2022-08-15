@@ -5,6 +5,7 @@ import com.emad.sattaricoordinator.model.CreateRequestModel;
 import com.emad.sattaricoordinator.model.LoginResponseModel;
 import com.emad.sattaricoordinator.model.LoginRequestModel;
 import com.emad.sattaricoordinator.model.RegisterRequestModel;
+import com.emad.sattaricoordinator.model.RequestItem;
 import com.emad.sattaricoordinator.model.RequestResponseModel;
 import com.emad.sattaricoordinator.model.TelegramMessageResponseModel;
 
@@ -27,6 +28,9 @@ public interface KheyratiApi {
 
     @POST("user/login")
     Call<LoginResponseModel> login(@Body LoginRequestModel requestModel);
+
+    @GET("/license/myRequests")
+    Call<List<RequestItem>> getMyRequests(@Header("Authorization") String authHeader);
 
     @GET("/license/requests")
     Call<List<RequestResponseModel>> getRequests(@Header("Authorization") String authHeader);
