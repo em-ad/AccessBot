@@ -1,7 +1,9 @@
 package com.emad.sattaricoordinator.repository.remote;
 
+import static com.emad.sattaricoordinator.utils.Constants.KHEYRATI_BASE_URL;
 import static com.emad.sattaricoordinator.utils.Constants.TELEGRAM_BASE_URL;
 
+import com.emad.sattaricoordinator.utils.AccessPreferences;
 import com.emad.sattaricoordinator.utils.Constants;
 import com.google.gson.GsonBuilder;
 
@@ -16,6 +18,7 @@ public class RetrofitClient {
 
     private static RetrofitClient instance = null;
     private final TelegramApi telegramApi;
+    private final KheyratiApi kheyratiApi;
 
     private RetrofitClient() {
 
@@ -24,12 +27,13 @@ public class RetrofitClient {
                 .build();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(TELEGRAM_BASE_URL)
+                .baseUrl(KHEYRATI_BASE_URL)
                 .addConverterFactory(createGsonFactory())
                 .client(httpClient)
                 .build();
 
         telegramApi = retrofit.create(TelegramApi.class);
+        kheyratiApi = retrofit.create(KheyratiApi.class);
     }
 
     private Converter.Factory createGsonFactory() {
@@ -53,5 +57,9 @@ public class RetrofitClient {
 
     public TelegramApi getTelegramApi() {
         return telegramApi;
+    }
+
+    public KheyratiApi getKheyratiApi() {
+        return kheyratiApi;
     }
 }

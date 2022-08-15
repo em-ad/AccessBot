@@ -22,7 +22,6 @@ public class AccessChooserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_service_chooser);
         findViews();
         initListeners();
-//        RemoteDataManager.getTelegramRepository().sendMessage("salam baby");
     }
 
     private void initListeners() {

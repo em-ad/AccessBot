@@ -10,4 +10,12 @@ public class RemoteDataManager {
         return telRepoInstance;
     }
 
+    private static KheyratiRepository kheyratiRepository;
+
+    public static KheyratiRepository getKheyratiRepository() {
+        if (kheyratiRepository == null)
+            kheyratiRepository = new KheyratiRepository();
+        return kheyratiRepository;
+    }
+
 }

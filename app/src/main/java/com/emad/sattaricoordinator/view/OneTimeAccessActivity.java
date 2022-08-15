@@ -17,12 +17,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emad.sattaricoordinator.BuildConfig;
 import com.emad.sattaricoordinator.R;
+import com.emad.sattaricoordinator.model.CreateRequestModel;
+import com.emad.sattaricoordinator.model.Employee;
+import com.emad.sattaricoordinator.repository.remote.ApiCallback;
 import com.emad.sattaricoordinator.repository.remote.RemoteDataManager;
 import com.emad.sattaricoordinator.repository.remote.TelegramRepository;
+import com.emad.sattaricoordinator.utils.Utils;
 import com.tapadoo.alerter.Alerter;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import ir.hamsaa.persiandatepicker.PersianDatePickerDialog;
 import ir.hamsaa.persiandatepicker.api.PersianPickerDate;
@@ -35,7 +43,8 @@ public class OneTimeAccessActivity extends AppCompatActivity {
 
     private TextView tvDate;
     private TextView tvSend;
-    private EditText etDescription;
+    private EditText etName;
+    private EditText etNationalCode;
 
     private MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
 
@@ -58,26 +67,59 @@ public class OneTimeAccessActivity extends AppCompatActivity {
     private void initClicks() {
         findViewById(R.id.back).setOnClickListener(view -> onBackPressed());
         tvSend.setOnClickListener(view -> {
-            if (accessDate != null && etDescription.getText().toString().trim().length() > 0){
-                loading.postValue(true);
-                String text = "درخواست ورود یکروزه برای تاریخ: " + accessDate + "\n"
-                        + etDescription.getText().toString().trim();
-                RemoteDataManager.getTelegramRepository().sendMessage(text, apiWatcher());
+            if (accessDate != null && etNationalCode.getText().toString().trim().length() == 10 && etName.getText().toString().trim().length() > 1){
+                sendRequest();
             } else showValidationError();
         });
         tvDate.setOnClickListener(view -> showDatePicker());
     }
 
-    private TelegramRepository.ApiCallback apiWatcher() {
-        return new TelegramRepository.ApiCallback() {
+    private void sendRequest() {
+        String token = getSharedPreferences(BuildConfig.APPLICATION_ID, MODE_PRIVATE).getString("token", "");
+        CreateRequestModel requestModel = new CreateRequestModel();
+        requestModel.setStartDate(String.valueOf(accessDate));
+        requestModel.setEndDate(String.valueOf(accessDate));
+        List<Employee> employeeList = new ArrayList<>();
+        Employee employee = new Employee();
+        employee.setName(etName.getText().toString().trim());
+        employee.setNid(etNationalCode.getText().toString().trim());
+        employeeList.add(employee);
+        requestModel.setEmployees(employeeList);
+        loading.postValue(true);
+        RemoteDataManager.getKheyratiRepository()
+                .createRequest("Bearer " + token, requestModel, new ApiCallback() {
+                    @Override
+                    public void apiFailed(Object o) {
+                        loading.postValue(false);
+                        Utils.showAlerter(
+                                OneTimeAccessActivity.this,
+                                "خطا در ارسال درخواست مجوز",
+                                ((Throwable) o).getMessage());
+                    }
+
+                    @Override
+                    public void apiSucceeded(Object o) {
+                        loading.postValue(false);
+                        Utils.showAlerter(
+                                OneTimeAccessActivity.this,
+                                "ثبت شد",
+                                "درخواست مجوز به زودی بررسی خواهد شد");
+                        etName.setText("");
+                        etNationalCode.setText("");
+                    }
+                });
+    }
+
+    private ApiCallback apiWatcher() {
+        return new ApiCallback() {
             @Override
-            public void apiFailed() {
+            public void apiFailed(Object o) {
                 loading.postValue(false);
                 showAlerter(OneTimeAccessActivity.this, "در ارسال درخواست خطایی رخ داد", "از روشن بودن VPN مطمئن شوید!");
             }
 
             @Override
-            public void apiSucceeded() {
+            public void apiSucceeded(Object o) {
                 loading.postValue(false);
                 showAlerter(OneTimeAccessActivity.this, "درخواست با موفقیت ارسال شد", "");
                 onBackPressed();
@@ -92,7 +134,8 @@ public class OneTimeAccessActivity extends AppCompatActivity {
     private void findViews() {
         tvDate = findViewById(R.id.tvDate);
         tvSend = findViewById(R.id.tvSend);
-        etDescription = findViewById(R.id.etDescription);
+        etName = findViewById(R.id.etName);
+        etNationalCode = findViewById(R.id.etNationalCode);
     }
 
     private void showDatePicker() {
@@ -113,8 +156,8 @@ public class OneTimeAccessActivity extends AppCompatActivity {
                 .setListener(new PersianPickerListener() {
                     @Override
                     public void onDateSelected(@NotNull PersianPickerDate persianPickerDate) {
-                        accessDate = persianPickerDate.getPersianLongDate();
-                        tvDate.setText(accessDate);
+                        accessDate = String.valueOf(persianPickerDate.getTimestamp());
+                        tvDate.setText(persianPickerDate.getPersianLongDate());
                     }
 
                     @Override

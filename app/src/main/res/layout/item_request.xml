@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/rounded_bordered_blue_box">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="لیست درخواست ها"
+        android:textColor="@color/black"
+        android:gravity="right"
+        android:fontFamily="@font/vazir_medium"
+        android:textSize="14sp"
+        tools:text="درخواست جدید\n از طرف: 09120324741"
+        android:drawableLeft="@drawable/arrow_left"
+
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
