@@ -12,8 +12,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +42,8 @@ import ir.hamsaa.persiandatepicker.util.PersianCalendarUtils;
 public class OneTimeAccessActivity extends AppCompatActivity {
 
     private String accessDate;
-
+    private LinearLayout ll;
+    private TextView tvAddMore;
     private TextView tvDate;
     private TextView tvSend;
     private EditText etName;
@@ -72,6 +75,11 @@ public class OneTimeAccessActivity extends AppCompatActivity {
             } else showValidationError();
         });
         tvDate.setOnClickListener(view -> showDatePicker());
+        tvAddMore.setOnClickListener(view -> addNewInputItem());
+    }
+
+    private void addNewInputItem() {
+        LayoutInflater.from(this).inflate(R.layout.item_request_person, ll, true);
     }
 
     private void sendRequest() {
@@ -79,12 +87,8 @@ public class OneTimeAccessActivity extends AppCompatActivity {
         CreateRequestModel requestModel = new CreateRequestModel();
         requestModel.setStartDate(String.valueOf(accessDate));
         requestModel.setEndDate(String.valueOf(accessDate));
-        List<Employee> employeeList = new ArrayList<>();
-        Employee employee = new Employee();
-        employee.setName(etName.getText().toString().trim());
-        employee.setNid(etNationalCode.getText().toString().trim());
-        employeeList.add(employee);
-        requestModel.setEmployees(employeeList);
+        List<Employee> employees = makeEmployeeListBundle();
+        requestModel.setEmployees(employees);
         loading.postValue(true);
         RemoteDataManager.getKheyratiRepository()
                 .createRequest("Bearer " + token, requestModel, new ApiCallback() {
@@ -102,12 +106,33 @@ public class OneTimeAccessActivity extends AppCompatActivity {
                         loading.postValue(false);
                         Utils.showAlerter(
                                 OneTimeAccessActivity.this,
-                                "ثبت شد",
+                                "درخواست برای " + (employees.size()) + " نفر " + "ثبت شد",
                                 "درخواست مجوز به زودی بررسی خواهد شد");
                         etName.setText("");
                         etNationalCode.setText("");
+                        ll.removeViews(1, ll.getChildCount() - 1);
                     }
                 });
+    }
+
+    private List<Employee> makeEmployeeListBundle() {
+        List<Employee> employees = new ArrayList<>();
+//        Employee employee = new Employee();
+//        employee.setName(etName.getText().toString().trim());
+//        employee.setNid(etNationalCode.getText().toString().trim());
+//        employees.add(employee);
+        for (int i = 1; i < ll.getChildCount(); i++) {
+            View parent = ll.getChildAt(i);
+            TextView name = parent.findViewById(R.id.etName);
+            TextView nationalCode = parent.findViewById(R.id.etNationalCode);
+            if(name.getText().toString().trim().length() == 0) continue;
+            if(nationalCode.getText().toString().trim().length() < 10) continue;
+            Employee newEmployee = new Employee();
+            newEmployee.setName(name.getText().toString().trim());
+            newEmployee.setNid(nationalCode.getText().toString().trim());
+            employees.add(newEmployee);
+        }
+        return employees;
     }
 
     private ApiCallback apiWatcher() {
@@ -132,10 +157,12 @@ public class OneTimeAccessActivity extends AppCompatActivity {
     }
 
     private void findViews() {
+        tvAddMore = findViewById(R.id.tvAddMore);
+        ll = findViewById(R.id.ll);
         tvDate = findViewById(R.id.tvDate);
         tvSend = findViewById(R.id.tvSend);
-        etName = findViewById(R.id.etName);
-        etNationalCode = findViewById(R.id.etNationalCode);
+        etName = findViewById(R.id.person1).findViewById(R.id.etName);
+        etNationalCode = findViewById(R.id.person1).findViewById(R.id.etNationalCode);
     }
 
     private void showDatePicker() {

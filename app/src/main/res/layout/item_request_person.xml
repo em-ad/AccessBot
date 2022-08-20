@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:padding="4dp"
+    android:background="@drawable/rounded_bordered_blue_box"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etName"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/vazir_medium"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_bordered_white_box"
+        android:paddingTop="12dp"
+        android:textColorHint="#DDD"
+        android:gravity="top|right"
+        android:textSize="15sp"
+        android:padding="12dp"
+        android:paddingBottom="12dp"
+        android:hint="نام فرد را بنویسید"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etNationalCode"
+        app:layout_constraintTop_toBottomOf="@id/etName"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="8dp"
+        android:maxLength="10"
+        android:fontFamily="@font/vazir_medium"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_bordered_white_box"
+        android:paddingTop="12dp"
+        android:textColorHint="#DDD"
+        android:gravity="top|right"
+        android:textSize="15sp"
+        android:padding="12dp"
+        android:paddingBottom="12dp"
+        android:hint="کد ملی فرد را بنویسید"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

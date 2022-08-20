@@ -63,48 +63,54 @@
         android:layout_marginLeft="32dp"
         />
 
-    <EditText
+    <ScrollView
+        android:id="@+id/scroller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/etName"
         app:layout_constraintTop_toBottomOf="@id/tvDate"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/vazir_medium"
-        android:textColor="@color/white"
-        android:background="@drawable/rounded_bordered_white_box"
-        android:paddingTop="12dp"
-        android:textColorHint="#DDD"
-        android:gravity="top|right"
-        android:textSize="15sp"
-        android:padding="12dp"
-        android:paddingBottom="12dp"
+        app:layout_constraintBottom_toTopOf="@id/tvSend"
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
-        android:hint="نام فرد را بنویسید"
-        />
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_request_person"
+        >
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/etNationalCode"
-        app:layout_constraintTop_toBottomOf="@id/etName"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:maxLength="10"
-        android:fontFamily="@font/vazir_medium"
-        android:textColor="@color/white"
-        android:background="@drawable/rounded_bordered_white_box"
-        android:paddingTop="12dp"
-        android:textColorHint="#DDD"
-        android:gravity="top|right"
-        android:textSize="15sp"
-        android:padding="12dp"
-        android:paddingBottom="12dp"
-        android:layout_marginRight="32dp"
-        android:layout_marginLeft="32dp"
-        android:hint="کد ملی فرد را بنویسید"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tvAddMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingRight="12dp"
+                android:paddingLeft="12dp"
+                android:drawablePadding="12dp"
+                android:gravity="center"
+                android:text="افزودن فرد بیشتر"
+                android:background="@drawable/rounded_bordered_white_box"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/vazir_medium"
+                android:drawableRight="@android:drawable/arrow_down_float"
+                />
+
+            <include layout="@layout/item_request_person"
+                android:id="@+id/person1"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <TextView
         android:layout_width="match_parent"
@@ -127,11 +133,14 @@
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:layout_constraintTop_toBottomOf="@id/etNationalCode"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/loading"
+        android:padding="4dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_margin="32dp"
+        android:background="@drawable/rounded_bordered_white_box"
         app:trackColor="@color/white"
         app:indicatorColor="#cc666666"
         android:indeterminate="true"

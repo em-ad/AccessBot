@@ -9,9 +9,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/main_bg"
+        android:icon="@drawable/sharif_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/main_bg"
+        android:roundIcon="@drawable/sharif_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.SattariCoordinator"
         tools:targetApi="31">
