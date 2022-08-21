@@ -4,6 +4,7 @@ import com.emad.sattaricoordinator.model.ChangeStatusModel;
 import com.emad.sattaricoordinator.model.CreateRequestModel;
 import com.emad.sattaricoordinator.model.LoginResponseModel;
 import com.emad.sattaricoordinator.model.LoginRequestModel;
+import com.emad.sattaricoordinator.model.NotificationModel;
 import com.emad.sattaricoordinator.model.RegisterRequestModel;
 import com.emad.sattaricoordinator.model.RequestItem;
 import com.emad.sattaricoordinator.model.RequestResponseModel;
@@ -42,4 +43,7 @@ public interface KheyratiApi {
     @POST("/license/changeRequestStatus")
     Call<Void> changeRequestStatus(@Header("Authorization") String authHeader,
                              @Body ChangeStatusModel model);
+
+    @GET("/notification/list")
+    Call<List<NotificationModel>> getNotifications(@Header("Authorization") String authHeader);
 }

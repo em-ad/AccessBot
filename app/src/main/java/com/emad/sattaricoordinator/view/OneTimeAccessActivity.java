@@ -117,10 +117,6 @@ public class OneTimeAccessActivity extends AppCompatActivity {
 
     private List<Employee> makeEmployeeListBundle() {
         List<Employee> employees = new ArrayList<>();
-//        Employee employee = new Employee();
-//        employee.setName(etName.getText().toString().trim());
-//        employee.setNid(etNationalCode.getText().toString().trim());
-//        employees.add(employee);
         for (int i = 1; i < ll.getChildCount(); i++) {
             View parent = ll.getChildAt(i);
             TextView name = parent.findViewById(R.id.etName);

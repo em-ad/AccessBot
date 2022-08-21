@@ -102,7 +102,7 @@
                 android:paddingBottom="12dp"
                 android:layout_marginBottom="8dp"
                 android:fontFamily="@font/vazir_medium"
-                android:drawableRight="@android:drawable/arrow_down_float"
+                android:drawableRight="@android:drawable/stat_notify_more"
                 />
 
             <include layout="@layout/item_request_person"
