@@ -15,6 +15,7 @@ import com.emad.sattaricoordinator.repository.remote.ApiCallback;
 import com.emad.sattaricoordinator.repository.remote.RemoteDataManager;
 import com.emad.sattaricoordinator.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccessChooserActivity extends AppCompatActivity {
@@ -72,7 +73,15 @@ public class AccessChooserActivity extends AppCompatActivity {
 
             @Override
             public void apiSucceeded(Object o) {
-                tvNotification.setText(String.valueOf(((List<NotificationModel>) o).size()));
+                List<NotificationModel> notifs = (List<NotificationModel>) o;
+                ArrayList<NotificationModel> newNotifs = new ArrayList<>();
+                long lastMessage = getSharedPreferences(BuildConfig.APPLICATION_ID, MODE_PRIVATE)
+                        .getLong("last_seen", 0);
+                for (int i = 0; i < notifs.size(); i++) {
+                    if(notifs.get(i).getCreateDate() > lastMessage)
+                        newNotifs.add(notifs.get(i));
+                }
+                tvNotification.setText(String.valueOf(newNotifs.size()));
             }
         });
     }

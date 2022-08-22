@@ -22,9 +22,10 @@
         app:layout_constraintRight_toRightOf="parent"
         android:background="@drawable/rounded_bordered_white_box"
         android:layout_margin="32dp"
-        android:padding="8dp"
+        android:padding="12dp"
         android:id="@+id/ivNotification"
         app:srcCompat="@android:drawable/ic_dialog_email"
+        android:foreground="?android:attr/selectableItemBackground"
         />
 
     <TextView
@@ -59,6 +60,7 @@
         android:textSize="15sp"
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
+        android:foreground="?android:attr/selectableItemBackground"
         />
 
     <TextView
@@ -77,6 +79,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginLeft="32dp"
         android:textSize="15sp"
+        android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/rounded_bordered_white_box"
         />
 
@@ -95,6 +98,7 @@
         android:layout_marginRight="32dp"
         android:visibility="gone"
         android:layout_marginLeft="32dp"
+        android:foreground="?android:attr/selectableItemBackground"
         android:textSize="15sp"
         android:background="@drawable/rounded_bordered_white_box"
         />
@@ -115,6 +119,7 @@
         android:visibility="visible"
         android:layout_marginLeft="32dp"
         android:textSize="15sp"
+        android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/rounded_bordered_white_box"
         />
 

@@ -53,9 +53,29 @@ public class NotificationListActivity extends AppCompatActivity {
 
             @Override
             public void apiSucceeded(Object o) {
-                if(adapter == null) return;
-                adapter.setDataSet(new ArrayList<>(((List<NotificationModel>) o)));
+                saveLastUnseenToPref(o);
             }
         });
+    }
+
+    private void saveLastUnseenToPref(Object o) {
+        List<NotificationModel> notifs = (List<NotificationModel>) o;
+
+        if(adapter != null)
+            adapter.setDataSet(new ArrayList<>(notifs),
+                    getSharedPreferences(BuildConfig.APPLICATION_ID, MODE_PRIVATE)
+                            .getLong("last_seen", 0));
+
+        long lastMessageDate = 0;
+        for (int i = 0; i < notifs.size(); i++) {
+            if (notifs.get(i).getCreateDate() > lastMessageDate)
+                lastMessageDate = notifs.get(i).getCreateDate();
+        }
+
+        getSharedPreferences(BuildConfig.APPLICATION_ID, MODE_PRIVATE)
+                .edit()
+                .putLong("last_seen", lastMessageDate)
+                .apply();
+
     }
 }

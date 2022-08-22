@@ -99,6 +99,7 @@
         android:layout_marginBottom="64dp"
         android:text="ورود به سیستم"
         android:textColor="@color/white"
+        android:foreground="?android:attr/selectableItemBackground"
         android:gravity="center"
         android:fontFamily="@font/vazir_bold_fd"
         android:layout_marginTop="32dp"
