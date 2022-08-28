@@ -1,6 +1,7 @@
 package com.emad.sattaricoordinator.repository.remote;
 
 import com.emad.sattaricoordinator.model.ChangeStatusModel;
+import com.emad.sattaricoordinator.model.CreateNotificationModel;
 import com.emad.sattaricoordinator.model.CreateRequestModel;
 import com.emad.sattaricoordinator.model.LoginResponseModel;
 import com.emad.sattaricoordinator.model.LoginRequestModel;
@@ -46,4 +47,8 @@ public interface KheyratiApi {
 
     @GET("/notification/list")
     Call<List<NotificationModel>> getNotifications(@Header("Authorization") String authHeader);
+
+    @POST("/notification/create")
+    Call<Void> createNotification(@Header("Authorization") String authHeader,
+                             @Body CreateNotificationModel model);
 }

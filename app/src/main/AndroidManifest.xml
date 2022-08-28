@@ -16,6 +16,9 @@
         android:theme="@style/Theme.SattariCoordinator"
         tools:targetApi="31">
         <activity
+            android:name=".view.NotificationCreationActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.NotificationListActivity"
             android:exported="false" />
         <activity

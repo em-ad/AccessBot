@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.emad.sattaricoordinator.BuildConfig;
 import com.emad.sattaricoordinator.R;
@@ -22,6 +24,7 @@ import java.util.List;
 public class AdminActivity extends AppCompatActivity {
 
     private RecyclerView recycler;
+    private TextView tvNotification;
     private RequestListAdapter adapter;
     private String token;
 
@@ -73,9 +76,14 @@ public class AdminActivity extends AppCompatActivity {
 
     private void findViews() {
         recycler = findViewById(R.id.recycler);
+        tvNotification = findViewById(R.id.tvNotification);
         adapter = new RequestListAdapter(item -> {
             Intent intent = new Intent(AdminActivity.this, RequestDetailsActivity.class);
             intent.putExtra("item", item);
+            startActivity(intent);
+        });
+        tvNotification.setOnClickListener(view -> {
+            Intent intent = new Intent(AdminActivity.this, NotificationCreationActivity.class);
             startActivity(intent);
         });
         recycler.setAdapter(adapter);

@@ -1,6 +1,7 @@
 package com.emad.sattaricoordinator.repository.remote;
 
 import com.emad.sattaricoordinator.model.ChangeStatusModel;
+import com.emad.sattaricoordinator.model.CreateNotificationModel;
 import com.emad.sattaricoordinator.model.CreateRequestModel;
 import com.emad.sattaricoordinator.model.LoginResponseModel;
 import com.emad.sattaricoordinator.model.LoginRequestModel;
@@ -125,6 +126,31 @@ public class KheyratiRepository {
 
                     @Override
                     public void onFailure(Call<List<NotificationModel>> call, Throwable t) {
+                        apiCallback.apiFailed(t);
+                    }
+                });
+    }
+
+    public void createNotification(String token, String message, ApiCallback apiCallback){
+
+        CreateNotificationModel model = new CreateNotificationModel();
+        model.setCreateDate(String.valueOf(System.currentTimeMillis()));
+        model.setTitle("اطلاعیه");
+        model.setDescription(message);
+
+        RetrofitClient.getInstance().getKheyratiApi()
+                .createNotification("Bearer " + token, model)
+                .enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            apiCallback.apiSucceeded(response.body());
+                        } else
+                            apiCallback.apiFailed(new Throwable(response.message()));
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
                         apiCallback.apiFailed(t);
                     }
                 });

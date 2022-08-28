@@ -14,6 +14,7 @@ import com.emad.sattaricoordinator.utils.Utils;
 import com.emad.sattaricoordinator.view.adapter.NotificationAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class NotificationListActivity extends AppCompatActivity {
@@ -60,7 +61,7 @@ public class NotificationListActivity extends AppCompatActivity {
 
     private void saveLastUnseenToPref(Object o) {
         List<NotificationModel> notifs = (List<NotificationModel>) o;
-
+        Collections.reverse(notifs);
         if(adapter != null)
             adapter.setDataSet(new ArrayList<>(notifs),
                     getSharedPreferences(BuildConfig.APPLICATION_ID, MODE_PRIVATE)
